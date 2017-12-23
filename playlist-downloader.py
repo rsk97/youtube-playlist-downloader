@@ -45,11 +45,13 @@ confirmation = raw_input('You are about to download {} videos to {}\nWould you l
 if confirmation.lower() in ['y', '']:
     for u in video_urls:
         yt = pytube.YouTube(u)
-        vid = yt.filter('mp4')[-1]
-        if vid.filename in directory_contents:
+        vid = yt.streams.filter(subtype = 'mp4').all()[0]
+        vid.download(args.destination)
+        #vid = yt.filter('mp4')[-1]
+        '''if vid.filename in directory_contents:
             print('Skipping {}'.format(vid.filename))
             continue
         else:
             print('Downloading {}'.format(vid.filename))
             vid.download(args.destination, on_progress=print_dot)
-            print('Done')
+            print('Done')'''
